@@ -11,9 +11,12 @@ public class Player : MonoBehaviour
 
     private Rigidbody _rb;
 
-    void Start()
+    public void RestartPlayer()
     {
+        gameObject.SetActive(true);
         _rb = GetComponent<Rigidbody>();
+        _rb.position = new Vector3(0, 0, -3.5f);
+        isAppleCollected = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
         {
             gameObject.SetActive(false);
             gameDirector.LevelCompleted();
+
         }
         if (other.CompareTag("Collectable"))
         {
