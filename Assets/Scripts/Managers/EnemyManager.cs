@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public Enemy enemyPrefab;
     public List<Enemy> enemies;
 
     public void stopEnemies()
