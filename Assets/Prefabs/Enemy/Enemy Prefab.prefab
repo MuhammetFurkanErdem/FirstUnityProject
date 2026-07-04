@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7113085321177979248}
   m_Layer: 0
   m_Name: Enemy Prefab
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77a2c23cdbee564eb88e44fc8c3fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  player: {fileID: 0}
   speed: 1
 --- !u!1 &6774423042236590893
 GameObject:
@@ -61,7 +60,7 @@ GameObject:
   - component: {fileID: 1656479935882690809}
   m_Layer: 0
   m_Name: Mesh
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

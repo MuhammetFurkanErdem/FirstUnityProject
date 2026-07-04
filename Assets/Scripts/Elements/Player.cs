@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Enemy")) 
         {
             gameObject.SetActive(false);
+            gameDirector.LevelCompleted();
         }
         if (other.CompareTag("Collectable"))
         {

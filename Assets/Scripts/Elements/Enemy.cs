@@ -2,14 +2,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Player player;
-    public float speed = 1;
+    private Player _player;
+    public float speed;
+
+    public void StartEnemy(Player player)
+    {
+        _player = player;
+    }
 
     private void Update()
     {
-        if (player.isAppleCollected)
+        if (_player.isAppleCollected)
         {
-            var direction = (player.transform.position - transform.position).normalized;
+            var direction = (_player.transform.position - transform.position).normalized;
             transform.position += direction * speed * Time.deltaTime;
         }
     }
