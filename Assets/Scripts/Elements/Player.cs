@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
 
     private Rigidbody _rb;
 
+    private bool _isCharacterWalking;
+
+    public Animator animator;
+
     public void RestartPlayer()
     {
         gameObject.SetActive(true);
@@ -42,29 +46,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    [System.Obsolete]
-    void Update()
+    private void Update()
+    {
+        MovePlayer();
+
+    }
+
+    private void MovePlayer()
     {
         var direction = Vector3.zero;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 5;
+            SetWalkingAnimationSpeed(2.5f);
         }
         else
         {
             speed = 2;
+            SetWalkingAnimationSpeed(1f);
         }
         if (Input.GetKey(KeyCode.Space))
         {
             direction += Vector3.up;
         }
-        if (Input.GetKey(KeyCode.W)) 
+        if (Input.GetKey(KeyCode.W))
         {
             direction += Vector3.forward;
         }
         if (Input.GetKey(KeyCode.S))
-        {    
+        {
             direction += Vector3.back;
         }
         if (Input.GetKey(KeyCode.D))
@@ -74,9 +85,44 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             direction += Vector3.left;
-        }
-        _rb.velocity = direction.normalized * speed;
+        } 
 
+        if(direction.magnitude < .1f)
+        {
+            TrigerIdleAnimation();
+        }
+        else
+        {
+            TrigerWalkingAnimation();
+        }
+
+        transform.LookAt(transform.position + direction);
+        _rb.linearVelocity = direction.normalized * speed;
     }
+
+    void TrigerWalkingAnimation()
+    {
+        if (!_isCharacterWalking)
+        {
+            animator.SetTrigger("Walk");
+            _isCharacterWalking = true;
+        }
+        
+    }
+
+    void TrigerIdleAnimation()
+    {
+        if (_isCharacterWalking)
+        {
+            animator.SetTrigger("Idle");
+            _isCharacterWalking = false;
+        }
+    }
+
+    void SetWalkingAnimationSpeed(float s)
+    {
+        animator.SetFloat("WalkSpeed", s);
+    }
+
 }
  
