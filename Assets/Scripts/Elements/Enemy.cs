@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     public Transform zPrefab;
 
-    private bool _isWalking = false;
+    private bool _isWalking;
 
     private Transform _z1, _z2;
 
