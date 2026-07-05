@@ -16,24 +16,24 @@ public class Enemy : MonoBehaviour
         _player = player;
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
+        transform.Rotate(0, Random.Range(0, 360), 0); // Randomly rotate the enemy at the start
     }
 
     private void Update()
     {
+        if (_player == null)
+            return;
+
         if (_player.isAppleCollected)
         {
-            /* var direction = (_player.transform.position - transform.position).normalized;
-            direction.y = 0; // Keep the enemy on the same plane as the player
-            _rb.position += direction * speed * Time.deltaTime;  */
-
-            navMeshAgent.SetDestination(_player.transform.position);
+            if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
+                navMeshAgent.SetDestination(_player.transform.position);
 
             if (!_isWalking)
             {
                 _animator.SetTrigger("Walk");
                 _isWalking = true;
             }
-
         }
     }
 
