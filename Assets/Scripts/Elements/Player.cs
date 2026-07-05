@@ -15,11 +15,20 @@ public class Player : MonoBehaviour
 
     public Animator animator;
 
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     public void RestartPlayer()
     {
         gameObject.SetActive(true);
-        _rb = GetComponent<Rigidbody>();
-        _rb.position = new Vector3(0, 0, -3.5f);
+
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+
+        transform.position = new Vector3(0, 0, -3.5f);
+
         isAppleCollected = false;
     }
 
@@ -31,18 +40,16 @@ public class Player : MonoBehaviour
             isAppleCollected = true;
             gameDirector.levelManager.AppleCollected();
         }
+
         if (other.CompareTag("Door") && isAppleCollected)
         {
             gameDirector.LevelCompleted();
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
+            gameDirector.GameOver();
             gameObject.SetActive(false);
-            gameDirector.LevelCompleted();
         }
     }
 
@@ -66,39 +73,32 @@ public class Player : MonoBehaviour
             speed = 2;
             SetWalkingAnimationSpeed(1f);
         }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            direction += Vector3.up;
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            direction += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            direction += Vector3.back;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction += Vector3.right;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            direction += Vector3.left;
-        } 
 
-        if(direction.magnitude < .1f)
+        if (Input.GetKey(KeyCode.W))
+            direction += Vector3.forward;
+
+        if (Input.GetKey(KeyCode.S))
+            direction += Vector3.back;
+
+        if (Input.GetKey(KeyCode.A))
+            direction += Vector3.left;
+
+        if (Input.GetKey(KeyCode.D))
+            direction += Vector3.right;
+
+        if (direction.sqrMagnitude < 0.01f)
         {
             TrigerIdleAnimation();
         }
         else
         {
             TrigerWalkingAnimation();
+            transform.forward = direction.normalized;
         }
 
-        transform.LookAt(transform.position + direction);
         _rb.linearVelocity = direction.normalized * speed;
     }
+
 
     void TrigerWalkingAnimation()
     {

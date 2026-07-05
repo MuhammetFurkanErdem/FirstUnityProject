@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameDirector : MonoBehaviour
 {
     public Player player;
+
     [Header ("Managers")]
     public EnemyManager enemyManager;
     public LevelManager levelManager;
@@ -32,5 +33,26 @@ public class GameDirector : MonoBehaviour
     public void LevelCompleted()
     {
         enemyManager.stopEnemies();
+
+        Debug.Log("LEVEL COMPLETED");
+
+        // Buraya ileride:
+        // - Win Panel
+        // - Sonraki Level
+        // - Coin Ödülü
+        // eklenebilir.
+    }
+
+    public void GameOver()
+    {
+        enemyManager.stopEnemies();
+
+        Debug.Log("GAME OVER");
+
+        // Buraya ileride:
+        // - Game Over Panel
+        // - Retry Butonu
+        // - Reklam
+        // eklenebilir.
     }
 }
